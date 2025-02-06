@@ -15,7 +15,6 @@ class PostScreen extends StatefulWidget {
 class _PostScreenState extends State<PostScreen> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     context.read<PostBloc>().add(PostFetched());
   }
@@ -23,8 +22,10 @@ class _PostScreenState extends State<PostScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
         title: Text("Post Screen"),
+        centerTitle: true,
       ),
       body: BlocBuilder<PostBloc, PostState>(builder: (context, state) {
         switch (state.postStatus) {
@@ -35,30 +36,71 @@ class _PostScreenState extends State<PostScreen> {
               child: Text("Operation Failed"),
             );
           case PostStatus.success:
-            return ListView.builder(
-                itemCount: state.postModel.length,
-                itemBuilder: (context, index) {
-                  final items = state.postModel[index];
-                  return ListTile(
-                    title: Text(
-                      items.email.toString(),
-                      style: TextStyle(
-                          color: Colors.blue,
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    subtitle: Text(
-                      items.body.toString(),
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w300),
-                    ),
-                    leading: CircleAvatar(
-                      child: Text(items.id.toString()),
-                    ),
-                  );
-                });
+            return Column(
+              children: [
+                TextFormField(
+                  decoration: InputDecoration(
+                      hintText: "Search your item", icon: Icon(Icons.search)),
+                  onChanged: (fliterSearch) {
+                    context.read<PostBloc>().add(SearchItem(fliterSearch));
+                  },
+                ),
+                SizedBox(
+                  height: 30,
+                ),
+                Expanded(
+                  child: ListView.builder(
+                      itemCount: state.tempPostModel.isEmpty
+                          ? state.postModel.length
+                          : state.tempPostModel.length,
+                      itemBuilder: (context, index) {
+                        if (state.tempPostModel.isNotEmpty) {
+                          final item = state.tempPostModel[index];
+                          return Card(
+                            color: const Color.fromARGB(31, 205, 193, 193),
+                            child: ListTile(
+                              title: Text(
+                                item.email.toString(),
+                                style: TextStyle(
+                                    color: Colors.blue,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              subtitle: Text(
+                                item.body.toString(),
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w300),
+                              ),
+                            ),
+                          );
+                        } else {
+                          final items = state.postModel[index];
+                          return Card(
+                            color: const Color.fromARGB(31, 205, 193, 193),
+                            child: ListTile(
+                              title: Text(
+                                items.email.toString(),
+                                style: TextStyle(
+                                    color: Colors.blue,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              subtitle: Text(
+                                items.body.toString(),
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w300),
+                              ),
+                            ),
+                          );
+                        }
+                      }),
+                ),
+              ],
+            );
         }
       }),
     );

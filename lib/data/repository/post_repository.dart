@@ -2,7 +2,7 @@ import "dart:async";
 import "dart:convert";
 import "dart:io";
 
-import "package:bloc_flutter/models/post_model.dart";
+import "package:bloc_flutter/data/models/post_model.dart";
 import "package:http/http.dart" as http;
 
 class PostRepository {
@@ -14,7 +14,7 @@ class PostRepository {
         final body = json.decode(response.body) as List;
         return body.map((e) {
           return PostModel(
-              id: e["id"],
+              id: e["id"] as int,
               postId: e["postId"],
               email: e["email"] as String,
               body: e["body"] as String);
