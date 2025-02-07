@@ -25,5 +25,6 @@ class PostRepository {
     } on TimeoutException {
       throw Exception("It's a timeOut exception");
     }
+    return null;
   }
 }

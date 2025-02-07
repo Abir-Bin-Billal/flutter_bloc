@@ -4,9 +4,7 @@ import 'package:bloc_flutter/bloc/post/post_bloc.dart';
 import 'package:bloc_flutter/bloc/switch/switch_bloc.dart';
 import 'package:bloc_flutter/bloc/todo/todo_bloc.dart';
 import 'package:bloc_flutter/utils/image_picker_utils.dart';
-import 'package:bloc_flutter/view/image_picker/image_picker_screen.dart';
-import 'package:bloc_flutter/view/post/post_screen.dart';
-import 'package:bloc_flutter/view/todo/todo_screen.dart';
+import 'package:bloc_flutter/view/auth/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -42,7 +40,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: PostScreen()
+        home: LoginScreen()
       ),
     );
   }

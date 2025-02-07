@@ -37,7 +37,7 @@ class _TodoScreenState extends State<TodoScreen> {
         child: Icon(Icons.add),
         onPressed: (){
        for(int i = 0 ; i<10 ; i++){
-         context.read<TodoBloc>().add(AddTotoEvent(task:'task' + i.toString()));
+         context.read<TodoBloc>().add(AddTotoEvent(task:'task$i'));
        }
       }),
     );
